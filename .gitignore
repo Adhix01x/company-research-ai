@@ -1,0 +1,42 @@
+# Root Gitignore
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+env/
+.env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# React Build outputs
+frontend/dist/
+frontend/dist-ssr/
+
+# Environment configurations (Crucial for API keys security)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Local reports storage
+backend/reports/
+backend/test.pdf
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo

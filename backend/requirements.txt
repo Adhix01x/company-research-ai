@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+httpx
+beautifulsoup4
+openai
+pydantic
+python-dotenv
+fpdf2
+markdown
