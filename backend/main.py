@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from services.ai import generate_company_report
@@ -71,10 +72,6 @@ class ResearchRequest(BaseModel):
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
-@app.get("/")
-def read_root():
-    """Root endpoint — basic welcome message."""
-    return {"message": "Welcome to the AI Research API"}
 
 
 @app.get("/api/health")
@@ -222,3 +219,22 @@ def download_pdf(filename: str):
         media_type="application/pdf",
         filename=safe_name,
     )
+
+
+# ---------------------------------------------------------------------------
+# Serve Frontend Static Files (in Production)
+# ---------------------------------------------------------------------------
+# Mount the React compiled dist directory at the root "/"
+# Check if dist folder exists (it won't exist locally until built)
+frontend_dist_dir = os.path.realpath(
+    os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+)
+if os.path.isdir(frontend_dist_dir):
+    logger.info("Mounting frontend static files from %s", frontend_dist_dir)
+    app.mount("/", StaticFiles(directory=frontend_dist_dir, html=True), name="static")
+else:
+    logger.warning(
+        "Frontend dist directory not found at %s. Serve static files disabled.",
+        frontend_dist_dir,
+    )
+

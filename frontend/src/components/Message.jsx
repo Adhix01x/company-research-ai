@@ -2,7 +2,7 @@ import { User, Download, ExternalLink, Phone, MapPin, Package, ShieldAlert, User
 
 const Message = ({ role, content, report, pdfUrl, targetUrl, isError }) => {
   const isUser = role === 'user'
-  const API_BASE = 'http://127.0.0.1:8000'
+  const API_BASE = window.location.port === '5173' ? 'http://127.0.0.1:8000' : ''
 
   if (isUser) {
     return (

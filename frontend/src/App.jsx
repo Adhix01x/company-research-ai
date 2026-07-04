@@ -6,7 +6,7 @@ import { Menu, X } from 'lucide-react'
 import './App.css'
 
 /* ---- Config ---- */
-const API_BASE_URL = 'http://127.0.0.1:8000'
+const API_BASE_URL = window.location.port === '5173' ? 'http://127.0.0.1:8000' : ''
 const API_RESEARCH_ENDPOINT = `${API_BASE_URL}/api/research`
 
 /* ---- Toast Context ---- */
