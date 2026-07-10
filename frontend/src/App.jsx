@@ -1,4 +1,4 @@
-import { useState, useCallback, createContext, useContext, useEffect } from 'react'
+import React, { useState, useCallback, createContext, useContext, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import ChatArea from './components/ChatArea'
 import Toast from './components/Toast'
@@ -38,7 +38,6 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-import React from 'react'
 
 function App() {
   const [messages, setMessages] = useState([])

@@ -9,11 +9,12 @@ import httpx
 logger = logging.getLogger(__name__)
 
 
-async def search_company(query: str) -> Dict[str, Any]:
+async def search_company(query: str, api_key: str = None) -> Dict[str, Any]:
     """Search for a company using the Serper Google Search API.
 
     Args:
         query: The search query string.
+        api_key: Optional Serper API key (overrides env var).
 
     Returns:
         A dictionary containing the search results, or an error dict.
@@ -22,8 +23,8 @@ async def search_company(query: str) -> Dict[str, Any]:
         httpx.HTTPStatusError: If the Serper API returns a non-2xx status.
         ValueError: If the Serper API key is not configured.
     """
-    api_key = os.getenv("SERPER_API_KEY")
-    if not api_key:
+    key_to_use = api_key or os.getenv("SERPER_API_KEY")
+    if not key_to_use:
         logger.error("SERPER_API_KEY environment variable is not set")
         raise ValueError("Serper API key not configured")
 
@@ -33,7 +34,7 @@ async def search_company(query: str) -> Dict[str, Any]:
         response = await client.post(
             "https://google.serper.dev/search",
             headers={
-                "X-API-KEY": api_key,
+                "X-API-KEY": key_to_use,
                 "Content-Type": "application/json",
             },
             json={"q": query},
